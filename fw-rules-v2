@@ -1,0 +1,214 @@
+### INSIDE ACL ###
+access-list cameras_access_in extended permit ip any any 
+access-list internal_dmz_access_in extended permit udp object switch_internal_dmz object cme_router eq ntp 
+access-list internal_dmz_access_in extended permit object-group dm_inline_service_1 object switch_internal_dmz object network_admin 
+access-list internal_dmz_access_in extended permit ip 10.70.1.0 255.255.255.0 object network_internetdmz 
+access-list internal_dmz_access_in extended permit object-group tcpudp any 10.70.1.0 255.255.255.0 object-group caqs 
+access-list internal_dmz_access_in extended permit ip any object network_internal-dmz 
+access-list internal_dmz_access_in extended deny ip any object network_stepinaclan 
+access-list internal_dmz_access_in extended permit ip any any 
+access-list navin_access_in remark allow dhcp requests to firewall
+access-list navin_access_in extended permit udp any any object-group dhcp 
+access-list navin_access_in extended permit udp object switch_navin object cme_router eq ntp 
+access-list navin_access_in extended permit object-group dm_inline_service_2 object switch_navin object network_admin 
+access-list navin_access_in extended permit object-group tcpudp any any eq domain 
+access-list navin_access_in extended permit tcp any any object-group foodservice 
+access-list navin_access_in extended permit object-group tcpudp any any object-group posto_foodservice 
+access-list navin_access_in extended deny ip object switch_navin object network_stepinaclan 
+access-list navin_access_in extended permit ip any any 
+access-list student_access_in extended permit udp object switch_studentcore object cme_router eq ntp 
+access-list student_access_in extended permit object-group dm_inline_service_3 object switch_studentcore object network_admin 
+access-list student_access_in extended permit object-group dm_inline_service_13 object server_student object network_admin 
+access-list student_access_in remark testing lightcast issues
+access-list student_access_in extended permit icmp object network_student object network_adminwifi 
+access-list student_access_in remark testing lightcast
+access-list student_access_in extended permit udp object network_student object-group dm_inline_network_8 range 32000 65000 
+access-list student_access_in extended permit ip 10.30.100.0 255.255.255.0 object server_exchange 
+access-list student_access_in extended permit tcp any any object-group alternate_email 
+access-list student_access_in extended permit tcp object switch_studentcore object network_managementsubnet eq telnet 
+access-list student_access_in extended permit ip 10.30.100.0 255.255.255.0 object network_internetdmz 
+access-list student_access_in remark allow user agent to talk to rocket to track logins
+access-list student_access_in extended permit object-group dm_inline_service_8 object-group dm_inline_network_3 object-group dm_inline_network_6 
+access-list student_access_in remark allow user agent to talk to rocket to track logins
+access-list student_access_in extended permit object-group dm_inline_service_7 object-group dm_inline_network_5 object-group dm_inline_network_4 
+access-list student_access_in extended permit object-group dm_inline_service_9 object server_wlc object server_rocketwebfilter inactive 
+access-list student_access_in extended permit object-group dm_inline_service_10 object server_rocketwebfilter object server_wlc inactive 
+access-list student_access_in extended permit object-group tcpudp any object-group dm_inline_network_7 eq domain 
+access-list student_access_in extended permit object-group tcpudp any host 8.8.8.8 eq domain inactive 
+access-list student_access_in remark ###**find real verizon dns addresses
+access-list student_access_in extended permit object-group tcpudp object-group allowed_dns object-group dm_inline_network_1 eq domain 
+access-list student_access_in remark access for video game club online gameplay
+access-list student_access_in extended permit object-group tcpudp any object-group twitch.tv_servers object-group twitch.tv 
+access-list student_access_in remark temp disbaled to figure out dhcp issye 8-22-19
+access-list student_access_in extended deny object-group tcpudp any any eq domain 
+access-list student_access_in remark main office copier
+access-list student_access_in extended permit object-group dm_inline_service_14 any host 10.10.24.8 inactive 
+access-list student_access_in remark block vpns
+access-list student_access_in extended deny object-group dm_inline_service_4 any any 
+access-list student_access_in extended deny object-group dm_inline_service_11 any object network_admin 
+access-list student_access_in extended permit ip any any 
+access-list outside_access_in extended permit tcp any any eq www 
+access-list outside_access_in extended permit tcp any any eq https 
+access-list outside_access_in extended permit udp any any eq ntp 
+access-list outside_access_in extended permit ip any object server_exchange 
+access-list outside_access_in extended permit object-group tcpudp any any object-group libservtraffic 
+access-list outside_access_in extended permit object-group tcpudp object network_admin object network_admin object-group wireless_print_service 
+access-list outside_access_in extended permit udp any any object-group bonjourprintservices 
+access-list outside_access_in extended permit udp object network_stepinaclan any eq ntp 
+access-list outside_access_in extended permit icmp any4 object network_stepinaclan 
+access-list outside_access_in extended permit udp object firewall_outside object network_admin eq tftp 
+access-list outside_access_in extended permit udp object-group switches_external object cme_router eq ntp 
+access-list outside_access_in extended permit object-group dm_inline_service_5 object-group switches_external object network_admin 
+access-list outside_access_in extended permit udp any any object-group dm_inline_udp_1 inactive 
+access-list outside_access_in extended permit object-group tcpudp any any object-group videocalls 
+access-list outside_access_in extended permit tcp any any object-group globalsportssb 
+access-list outside_access_in extended permit object-group cameras any object server_camera inactive 
+access-list outside_access_in extended permit object-group tcpudp any 10.70.1.0 255.255.255.0 object-group caqs 
+access-list outside_access_in extended permit object-group tcpudp any object-group twitch.tv_servers object-group twitch.tv 
+access-list outside_access_in extended permit object-group tcpudp any any object-group printer_assessment 
+access-list outside_access_in remark for streaming graduation
+access-list outside_access_in extended permit tcp any any object-group dm_inline_tcp_1 
+access-list outside_access_out extended permit tcp object-group dm_inline_network_2 object server_firstclass eq www 
+access-list outside_access_out extended deny tcp any object server_firstclass eq www 
+access-list outside_access_out extended permit udp any any eq ntp 
+access-list outside_access_out extended permit tcp any any object-group webtraffic 
+access-list outside_access_out remark predefined tcp-udp protocols
+access-list outside_access_out extended permit object-group tcpudp any any object-group allowout_tcp-udp 
+access-list outside_access_out extended permit object-group tcpudp any any object-group caqs 
+access-list outside_access_out extended permit object-group tcpudp any any object-group conference_chat 
+access-list outside_access_out extended permit object-group tcpudp any any object-group firstclass 
+access-list outside_access_out extended permit object-group tcpudp any any object-group goglobal 
+access-list outside_access_out extended permit object-group tcpudp any any object-group helpdesk 
+access-list outside_access_out extended permit object-group tcpudp any any object-group libservtraffic 
+access-list outside_access_out extended permit object-group tcpudp any any object-group remotedesktop 
+access-list outside_access_out extended permit object-group tcpudp any any object-group snpp 
+access-list outside_access_out extended permit object-group tcpudp any any object-group webhostaccess 
+access-list outside_access_out extended permit tcp any any object-group allow-out-tcp 
+access-list outside_access_out remark access to my.scranton.edu
+access-list outside_access_out extended permit tcp any any eq 8090 
+access-list outside_access_out remark access to mywcc site
+access-list outside_access_out extended permit tcp any any eq 8400 
+access-list outside_access_out extended permit tcp any any object-group alternate_email 
+access-list outside_access_out extended permit tcp any any object-group globalsportssb 
+access-list outside_access_out extended permit tcp any any object-group googlehangouts 
+access-list outside_access_out extended permit tcp any any object-group navinbrothers 
+access-list outside_access_out extended permit object-group tcpudp any any object-group posto_foodservice 
+access-list outside_access_out remark webex share streaming
+access-list outside_access_out extended permit object-group tcpudp any any object-group dm_inline_tcpudp_1 
+access-list outside_access_out extended permit udp any any object-group udp-allowed-out 
+access-list outside_access_out extended permit udp any any object-group googlehangouts-udp 
+access-list outside_access_out extended permit udp any any object-group vpn 
+access-list outside_access_out extended permit object 1701 any any 
+access-list outside_access_out extended permit object-group dm_inline_service_12 any any 
+access-list outside_access_out extended permit object-group protocol-group-allowed-out any any 
+access-list outside_access_out extended permit object-group tcpudp any any object-group videocalls 
+access-list outside_access_out extended permit object-group tcpudp object network_admin object network_admin object-group wireless_print_service 
+access-list outside_access_out extended permit udp any any object-group bonjourprintservices 
+access-list outside_access_out extended permit udp any any object-group dm_inline_udp_2 inactive 
+access-list outside_access_out remark streaming graduation
+access-list outside_access_out extended permit tcp any any eq 1935 
+access-list outside_access_out remark unknown - used on old pix
+access-list outside_access_out extended permit tcp object network_admin any eq 9100 
+access-list outside_access_out remark unknown - used on old pix
+access-list outside_access_out extended permit object-group dm_inline_service_6 object network_admin any 
+access-list outside_access_out extended permit ip object network_admin object switch_pc-users 
+access-list outside_access_out remark chromecast
+access-list outside_access_out extended permit udp object network_adminwifi any eq ntp 
+access-list outside_access_out remark for video game club
+access-list outside_access_out extended permit object-group tcpudp any any object-group twitch.tv inactive 
+access-list outside_access_out extended permit udp object server_rocketwebfilter any object-group rocketfilter 
+access-list outside_access_out extended permit tcp object server_rocketwebfilter any object-group rocketwebfilter 
+access-list outside_access_out remark testing lightcast
+access-list outside_access_out extended permit udp object network_student object-group dm_inline_network_9 range 32000 65000 
+access-list outside_access_out extended deny ip any object network_pc-users 
+
+### OUTSIDE ACL ###
+access-list Internet_DMZ_access_in remark Alloiws NTP Service on Call Manager
+access-list Internet_DMZ_access_in extended permit udp object Switch_Internet-DMZ object CME_Router eq ntp 
+access-list Internet_DMZ_access_in remark Access to Bascom Management
+access-list Internet_DMZ_access_in extended permit tcp 10.90.1.0 255.255.255.0 object Outside-Interface-IP object-group Bascom_Filter_Access 
+access-list Internet_DMZ_access_in extended permit icmp object Switch_Internet-DMZ object Network_Admin 
+access-list Internet_DMZ_access_in remark Allow file transfer protocol
+access-list Internet_DMZ_access_in extended permit udp object Switch_Internet-DMZ object Network_Admin eq tftp 
+access-list Internet_DMZ_access_in remark Local Live
+access-list Internet_DMZ_access_in extended permit object-group DM_INLINE_SERVICE_2 any any 
+access-list Internet_DMZ_access_in remark Local Live
+access-list Internet_DMZ_access_in extended permit tcp any any object-group DM_INLINE_TCP_2 
+access-list Internet_DMZ_access_in remark Deny all other traffic from Stepinac LAN
+access-list Internet_DMZ_access_in extended deny ip any object Network_Stepinac-LAN 
+access-list Internet_DMZ_access_in remark Allow all other traffic to DMZ zone
+access-list Internet_DMZ_access_in extended permit ip any any 
+access-list PC-Users_access_in remark Allow DHCP Access
+access-list PC-Users_access_in extended permit udp any any object-group DHCP 
+access-list PC-Users_access_in remark Allow WPCUG to access phone system
+access-list PC-Users_access_in extended permit udp object Switch_PC-Users object CME_Router eq ntp 
+access-list PC-Users_access_in extended permit icmp object Switch_PC-Users object Network_Admin 
+access-list PC-Users_access_in remark Allow File transfer
+access-list PC-Users_access_in extended permit udp object Switch_PC-Users object Network_Admin eq tftp 
+access-list PC-Users_access_in remark Deny general access to Stepinac Lan Network
+access-list PC-Users_access_in extended deny ip any object Network_Stepinac-LAN 
+access-list PC-Users_access_in remark Allow all other traffic to PC -Users group
+access-list PC-Users_access_in extended permit ip any any inactive 
+access-list Outside-Cablevision_access_in remark Allow Emails in from Barracuda
+access-list Outside-Cablevision_access_in extended permit tcp object-group DM_INLINE_NETWORK_5 object-group DM_INLINE_NETWORK_4 eq smtp 
+access-list Outside-Cablevision_access_in extended permit tcp any object Server_Exchange eq https 
+access-list Outside-Cablevision_access_in extended deny tcp object Server_Exchange any eq smtp 
+access-list Outside-Cablevision_access_in extended permit object-group TCP-UDP any object Server_AC_Management object-group AC_Controller 
+access-list Outside-Cablevision_access_in remark General Web Access ports
+access-list Outside-Cablevision_access_in extended permit tcp any object Network_Stepinac-LAN object-group Allow-in-TCP 
+access-list Outside-Cablevision_access_in remark Rocket Filtering Ports
+access-list Outside-Cablevision_access_in extended permit object-group TCP-UDP any object Network_Stepinac-LAN object-group Filter_Service_Group 
+access-list Outside-Cablevision_access_in extended permit udp any object Network_Stepinac-LAN object-group VPN 
+access-list Outside-Cablevision_access_in extended permit udp any object Network_Stepinac-LAN eq domain 
+access-list Outside-Cablevision_access_in extended permit tcp any object Network_Stepinac-LAN object-group (TCP/444) 
+access-list Outside-Cablevision_access_in extended permit tcp any object Network_Stepinac-LAN object-group (TCP/210) 
+access-list Outside-Cablevision_access_in extended permit tcp any object Outside-Interface-IP object-group (TCP/8081) 
+access-list Outside-Cablevision_access_in extended permit tcp any object Outside-Interface-IP object-group (TCP/19305-19309) 
+access-list Outside-Cablevision_access_in extended permit tcp any object Outside-Interface-IP object-group (TCP/7000) 
+access-list Outside-Cablevision_access_in extended permit tcp any object-group (OBJECT/Network_Stepinac-LAN, Outside-Interface-IP) object-group (TCP/6600-6601) 
+access-list Outside-Cablevision_access_in extended permit tcp any object Outside-Interface-IP object-group (TCP/1402, 20022) 
+access-list Outside-Cablevision_access_in extended permit udp object Network_Stepinac-LAN any eq (UDP/123) 
+access-list Outside-Cablevision_access_in extended permit udp any object Network_Stepinac-LAN object-group UDP-Allowed-In 
+access-list Outside-Cablevision_access_in extended permit udp any object Outside-Interface-IP object-group Google_Hangouts_UDP 
+access-list Outside-Cablevision_access_in extended permit udp any object Outside-Interface-IP object-group NOT_REGISTERED_UDP 
+access-list Outside-Cablevision_access_in extended permit object-group TCP-UDP any object Network_Stepinac-LAN object-group CameraWeb_Access 
+access-list Outside-Cablevision_access_in extended permit object-group TCP-UDP any object Outside-Interface-IP object-group Printer_Assessment_Access 
+access-list Outside-Cablevision_access_in extended permit object-group TCP-UDP any object Outside-Interface-IP object-group Unregistered_TCP-UPD 
+access-list Outside-Cablevision_access_in extended permit udp any object Outside-Interface-IP object-group ADVidyo-UDP inactive 
+access-list Outside-Cablevision_access_in extended permit tcp any object Outside-Interface-IP object-group ADVidyo inactive 
+access-list Outside-Cablevision_access_in extended permit object-group DM_INLINE_PROTOCOL_1 any object Outside-Interface-IP 
+access-list Outside-Cablevision_access_in extended deny ip object ZBLOCKED_blockedIPAddress any 
+access-list Outside-Cablevision_access_in extended deny ip object ZBLOCKED_blockedIPAddress_1 any 
+access-list Outside-Vz_access_in remark Allow Emails in from Barracuda
+access-list Outside-Vz_access_in extended permit tcp object-group DM_INLINE_NETWORK_6 object-group DM_INLINE_NETWORK_3 eq smtp 
+access-list Outside-Vz_access_in extended permit tcp any object Server_Exchange eq https 
+access-list Outside-Vz_access_in extended deny tcp object Server_Exchange any eq smtp 
+access-list Outside-Vz_access_in extended permit object-group TCP-UDP any object Server_AC_Management object-group AC_Controller 
+access-list Outside-Vz_access_in remark General Web Access ports
+access-list Outside-Vz_access_in extended permit tcp any object Network_Stepinac-LAN object-group Allow-in-TCP 
+access-list Outside-Vz_access_in remark Rocket Filtering Ports
+access-list Outside-Vz_access_in extended permit object-group TCP-UDP any object Network_Stepinac-LAN object-group Filter_Service_Group 
+access-list Outside-Vz_access_in extended permit udp any object Network_Stepinac-LAN object-group VPN 
+access-list Outside-Vz_access_in extended permit udp any object Network_Stepinac-LAN eq domain 
+access-list Outside-Vz_access_in extended permit icmp any4 object Network_Stepinac-LAN 
+access-list Outside-Vz_access_in extended permit udp object Network_Stepinac-LAN any eq ntp 
+access-list Outside-Vz_access_in extended permit udp any object Network_Stepinac-LAN eq ntp 
+access-list Outside-Vz_access_in extended permit tcp any object Network_Stepinac-LAN object-group (TCP/444) 
+access-list Outside-Vz_access_in extended permit tcp any object Network_Stepinac-LAN object-group (TCP/210) 
+access-list Outside-Vz_access_in extended permit tcp any object Outside-Interface-IP object-group (TCP/8081) 
+access-list Outside-Vz_access_in extended permit tcp any object Network_Stepinac-LAN object-group (TCP/7000) 
+access-list Outside-Vz_access_in extended permit tcp any object-group DM_INLINE_NETWORK_2 object-group (TCP/6600-6601) 
+access-list Outside-Vz_access_in extended permit udp any object Network_Stepinac-LAN object-group UDP-Allowed-In 
+access-list Outside-Vz_access_in extended permit udp any object Outside-Interface-IP object-group Google_Hangouts_UDP 
+access-list Outside-Vz_access_in extended permit object-group TCP-UDP any object Network_Stepinac-LAN object-group CameraWeb_Access 
+access-list Outside-Vz_access_in extended permit object-group TCP-UDP any object Outside-Interface-IP object-group Printer_Assessment_Access 
+access-list Outside-Vz_access_in remark Local Live
+access-list Outside-Vz_access_in extended permit object-group DM_INLINE_SERVICE_1 any object Network_Internet-DMZ 
+access-list Outside-Vz_access_in remark Local Live
+access-list Outside-Vz_access_in extended permit tcp any object Network_Internet-DMZ object-group DM_INLINE_TCP_1 
+access-list Outside-Vz_access_in extended permit udp any object Outside-Interface-IP object-group NOT_REGISTERED_UDP inactive 
+access-list Outside-Vz_access_in extended permit tcp any object Outside-Interface-IP object-group (TCP/1402, 20022) inactive 
+access-list Outside-Vz_access_in extended permit object-group TCP-UDP any object Outside-Interface-IP object-group Unregistered_TCP-UPD inactive 
+access-list Outside-Vz_access_in extended permit object-group DM_INLINE_PROTOCOL_2 any object Outside-Interface-IP 
+access-list Outside-Vz_access_in extended deny ip object ZBLOCKED_blockedIPAddress any 
+access-list Outside-Vz_access_in extended deny ip object ZBLOCKED_blockedIPAddress_1 any 
